@@ -16,7 +16,7 @@
       name: Yup.string().required(),
     }),
     onSubmit: async (values) => {
-      const response = await Service.chat.createChat(values.title);
+      const response = await Service.chat.create(values.title);
 
       console.log(response);
     },
@@ -51,5 +51,10 @@
 
       <Button type="submit" fullWidth>Create</Button>
     </form>
+    <div class="mt-4">
+      <a class="text-indigo-500 hover:text-indigo-600 underline" href="/#">
+        Join a Chat
+      </a>
+    </div>
   </div>
 </div>
