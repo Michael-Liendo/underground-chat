@@ -2,7 +2,7 @@ const ApiRequest = () => {
   return async (url: string, options?: RequestInit) => {
     const defaultOptions = {};
 
-    const apiUrl = `${import.meta.env.VITE_API_URL}/v1${url}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api${url}`;
     const requestOptions = {
       ...options,
       headers: new Headers({

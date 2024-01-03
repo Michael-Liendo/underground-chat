@@ -7,7 +7,7 @@ interface Chat {
 
 export default class ChatService {
   static async createChat(title: string): Promise<Chat> {
-    const response = await fetch('/chat/create_chat', {
+    const response = await fetch('/chat/create', {
       method: 'POST',
       body: JSON.stringify({ title }),
     });
