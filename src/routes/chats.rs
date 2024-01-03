@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 pub fn chats_routes() -> Router {
-    Router::new().route("/create-chat", post(create_chat))
+    Router::new().route("/create", post(create_chat))
 }
 
 async fn create_chat(Json(chat_for_create): Json<ChatForCreate>) -> Result<Json<Chat>, String> {
