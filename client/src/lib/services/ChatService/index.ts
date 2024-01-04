@@ -13,8 +13,8 @@ interface ChatResponse {
 }
 
 export default class ChatService {
-  static async join(chatID:string) {
-    socket.emit('join', chatID)
+  static async join(chatID: string) {
+    socket.emit('join', chatID);
   }
 
   static async create(title: string): Promise<Chat | null> {

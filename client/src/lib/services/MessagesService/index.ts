@@ -2,7 +2,6 @@ import { messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
 import UserService from '../UserService';
 
-
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
   auth: { username: await UserService.get() },
 });
