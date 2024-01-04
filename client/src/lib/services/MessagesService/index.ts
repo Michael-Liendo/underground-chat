@@ -1,24 +1,20 @@
 import { io } from 'socket.io-client';
+import { messagesStore, type Message } from '$lib/stores/messages';
 
-interface Chat {
-  id: string;
-  title: string;
-}
+export const socket = io(`${import.meta.env.VITE_API_URL}/ws`);
 
-interface ChatResponse {
-  success: boolean;
-  data?: Chat;
-  error?: unknown;
-}
-
-const socket = io(`${import.meta.env.VITE_API_URL}/ws`);
+socket.on('chat message', (message: unknown, name: string) => {
+  console.log('on message', message);
+  messagesStore.update((messages) => [
+    ...messages,
+    { content: message as string, userName: 'any' },
+  ]);
+});
 
 export default class MessagesService {
   static async send(content: string, chatID: string): Promise<string | null> {
     try {
-      socket.emit('chat message', content, (response: unknown) => {
-        console.log(response);
-      });
+      socket.emit('chat message', content);
 
       return 'send';
     } catch (error) {
