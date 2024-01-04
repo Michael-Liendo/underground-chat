@@ -22,7 +22,11 @@ fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
 
     socket.on("chat message", |socket: SocketRef, Data::<Value>(data)| {
         println!("Received event: {:?} \n", data);
-        socket.broadcast().emit("chat message", data).ok();
+
+        let chat_id = &data.as_array().unwrap()[2].as_str().unwrap();
+        socket.join(chat_id.to_string()).ok();
+        socket.broadcast().emit("chat message", &data).ok();
+        socket.leave(chat_id.to_string()).ok();
     });
 }
 
