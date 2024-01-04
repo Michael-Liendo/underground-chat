@@ -7,6 +7,7 @@
   import Service from '$lib/services';
   import { messagesStore } from '$lib/stores/messages';
   import { socket } from '$lib/services/MessagesService';
+  import { onMount } from 'svelte';
 
   let listRef: HTMLElement | undefined;
 
@@ -29,6 +30,10 @@
       });
     }
   }
+
+  onMount(() => {
+    Service.chat.join($page.params.id);
+  });
 </script>
 
 <div class="flex h-screen">

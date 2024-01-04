@@ -1,4 +1,5 @@
 import fetch from '$lib/utils/fetch';
+import { socket } from '../MessagesService';
 
 interface Chat {
   id: string;
@@ -12,6 +13,10 @@ interface ChatResponse {
 }
 
 export default class ChatService {
+  static async join(chatID:string) {
+    socket.emit('join', chatID)
+  }
+
   static async create(title: string): Promise<Chat | null> {
     try {
       const response = await fetch('/chat/create', {
