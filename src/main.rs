@@ -14,8 +14,14 @@ use tower_http::cors::CorsLayer;
 
 mod routes;
 
-fn on_connect(socket: SocketRef) {
+fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
+    println!("\nSocket.IO connected: {:?} {:?}", socket.ns(), socket.id);
+
+    // todo: emit a event with the user name
+    println!("Auth data {:?}", data);
+
     socket.on("chat message", |socket: SocketRef, Data::<Value>(data)| {
+        println!("Received event: {:?} \n", data);
         socket.broadcast().emit("chat message", data).ok();
     });
 }
