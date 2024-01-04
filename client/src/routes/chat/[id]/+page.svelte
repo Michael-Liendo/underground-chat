@@ -8,6 +8,7 @@
   import { messagesStore } from '$lib/stores/messages';
   import { socket } from '$lib/services/MessagesService';
   import { onMount } from 'svelte';
+  import getHour from '$lib/utils/DateToHours';
 
   let listRef: HTMLElement | undefined;
 
@@ -75,7 +76,9 @@
               <div>
                 <h3 class="font-bold">
                   {message.username}
-                  <span class="text-sm text-gray-400">10:16 AM</span>
+                  <span class="text-sm text-gray-400"
+                    >{getHour(message.created_at)}</span
+                  >
                 </h3>
                 <p>{message.content}</p>
               </div>
