@@ -20,7 +20,7 @@ struct Message {
     content: String,
     room: String,
     username: String,
-    create_at: DateTime<Utc>,
+    created_at: DateTime<Utc>,
 }
 
 fn on_connect(socket: SocketRef) {
