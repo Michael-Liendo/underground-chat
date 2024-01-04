@@ -19,10 +19,10 @@ fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
     socket.emit("auth", data).ok();
 
     socket.on(
-        "message",
+        "chat message",
         |socket: SocketRef, Data::<Value>(data), Bin(bin)| {
             println!("Received event: {:?} {:?}", data, bin);
-            socket.bin(bin).emit("message-back", data).ok();
+            socket.broadcast().emit("chat message", data).ok();
         },
     );
 }
