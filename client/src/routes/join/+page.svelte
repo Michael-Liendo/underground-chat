@@ -8,22 +8,17 @@
 
   const { handleSubmit, values, errors } = newForm({
     initialValues: {
-      title: '',
+      id: '',
       name: '',
     },
     validationSchema: Yup.object({
-      title: Yup.string().required(),
+      id: Yup.string().required(),
       name: Yup.string().required(),
     }),
     onSubmit: async (values) => {
-      const response = await Service.chat.create(values.title);
-      const createUser = await Service.user.create(values.name);
+      Service.user.create(values.name);
 
-      if (response?.id) {
-        window.location.pathname = `/chat/${response.id}`;
-      } else {
-        console.log(response);
-      }
+      window.location.pathname = `/chat/${values.id}`;
     },
   });
 </script>
@@ -33,15 +28,16 @@
     class="w-full max-w-md p-6 m-auto bg-gray-800 rounded-xl shadow-md dark:bg-gray-800"
   >
     <h1 class="text-2xl font-semibold text-center text-white dark:text-white">
-      Create a chat
+      Join a chat
     </h1>
     <form on:submit={handleSubmit} class="mt-4 space-y-4">
       <TextField
-        name="title"
-        label="Title"
-        placeholder="Enter chat title"
-        error={$errors.title}
-        bind:value={$values.title}
+        name="id"
+        label="Chat ID"
+        placeholder="Enter chat id"
+        error={$errors.id}
+        bind:value={$values.id}
+        autocomplete={'false'}
         required
       />
 
@@ -54,11 +50,11 @@
         required
       />
 
-      <Button type="submit" fullWidth>Create</Button>
+      <Button type="submit" fullWidth>Join</Button>
     </form>
     <div class="mt-4">
-      <a class="text-indigo-500 hover:text-indigo-600 underline" href="/join">
-        Join a Chat
+      <a class="text-indigo-500 hover:text-indigo-600 underline" href="/">
+        Create a Chat
       </a>
     </div>
   </div>

@@ -8,6 +8,7 @@
   import { messagesStore } from '$lib/stores/messages';
   import { socket } from '$lib/services/MessagesService';
   import { onMount } from 'svelte';
+  import getHour from '$lib/utils/DateToHours';
 
   let listRef: HTMLElement | undefined;
 
@@ -41,6 +42,7 @@
     <h2 class="text-xl font-bold mb-4">Online Users</h2>
     <ul class="space-y-2">
       <li>John Doe</li>
+      <li>Jane</li>
     </ul>
   </aside>
 
@@ -48,7 +50,7 @@
     <header
       class="flex items-center justify-between p-4 bg-gray-800 text-white"
     >
-      <h1 class="text-2xl font-bold">CyberSec Chat ( Title )</h1>
+      <h1 class="text-2xl font-bold">{$page.params.id}</h1>
       <div class="relative">
         <TextField
           name="message"
@@ -75,7 +77,9 @@
               <div>
                 <h3 class="font-bold">
                   {message.username}
-                  <span class="text-sm text-gray-400">10:16 AM</span>
+                  <span class="text-sm text-gray-400"
+                    >{getHour(message.created_at)}</span
+                  >
                 </h3>
                 <p>{message.content}</p>
               </div>
