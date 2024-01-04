@@ -4,7 +4,6 @@ import { messagesStore, type Message } from '$lib/stores/messages';
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`);
 
 socket.on('chat message', (message: unknown, name: string) => {
-  console.log('on message', message);
   messagesStore.update((messages) => [
     ...messages,
     { content: message as string, userName: 'any' },
