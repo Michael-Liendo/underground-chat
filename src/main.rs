@@ -24,9 +24,10 @@ fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
         println!("Received event: {:?} \n", data);
 
         let chat_id = &data.as_array().unwrap()[2].as_str().unwrap();
-        socket.join(chat_id.to_string()).ok();
-        socket.broadcast().emit("chat message", &data).ok();
-        socket.leave(chat_id.to_string()).ok();
+        socket
+            .within(chat_id.to_string())
+            .emit("chat message", &data)
+            .ok();
     });
 }
 
