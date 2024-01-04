@@ -5,7 +5,6 @@ use axum::{
     Router,
 };
 use dotenv::dotenv;
-use serde_json::Value;
 use socketioxide::{
     extract::{Data, SocketRef},
     SocketIo,
@@ -13,6 +12,13 @@ use socketioxide::{
 use tower_http::cors::CorsLayer;
 
 mod routes;
+
+#[derive(Debug, serde::Deserialize, serde::Serialize)]
+struct Message {
+    content: String,
+    room: String,
+    username: String,
+}
 
 fn on_connect(socket: SocketRef) {
     socket.on(
@@ -24,17 +30,19 @@ fn on_connect(socket: SocketRef) {
         },
     );
 
-    socket.on("chat message", |socket: SocketRef, Data::<Value>(data)| {
-        println!("Received event: {:?} \n", data);
+    socket.on(
+        "chat message",
+        |socket: SocketRef, Data::<Message>(data)| {
+            println!("Received event: {:?} \n", data);
 
-        // todo change to struct and add the date time
-        let chat_id = &data.as_array().unwrap()[2].as_str().unwrap();
-        socket
-            .within(chat_id.to_string())
-            .broadcast()
-            .emit("chat message", &data)
-            .ok();
-    });
+            let chat_id = &data.room;
+            socket
+                .within(chat_id.to_string())
+                .broadcast()
+                .emit("chat message", data)
+                .ok();
+        },
+    );
 }
 
 #[tokio::main]
