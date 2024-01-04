@@ -4,7 +4,9 @@ use axum::{
     http::{header, HeaderValue},
     Router,
 };
+use chrono::{DateTime, Utc};
 use dotenv::dotenv;
+use serde::{Deserialize, Serialize};
 use socketioxide::{
     extract::{Data, SocketRef},
     SocketIo,
@@ -13,11 +15,12 @@ use tower_http::cors::CorsLayer;
 
 mod routes;
 
-#[derive(Debug, serde::Deserialize, serde::Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 struct Message {
     content: String,
     room: String,
     username: String,
+    create_at: DateTime<Utc>,
 }
 
 fn on_connect(socket: SocketRef) {
