@@ -1,17 +1,34 @@
 <script lang="ts">
+  import { newForm } from '@whizzes/svelte-forms';
+
   /** @type {import('./$types').RouteParams} */
   import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { io } from 'socket.io-client';
   import TextField from '$lib/components/TextField.svelte';
+  import Service from '$lib/services';
+  import { messagesStore } from '$lib/stores/messages';
+  import { socket } from '$lib/services/MessagesService';
 
-  onMount(() => {
-    const socket = io('http://127.0.0.1:3000/ws');
+  let listRef: HTMLElement | undefined;
 
-    setTimeout(() => {
-      socket.emit('message', 'michael');
-    }, 5000);
+  const { handleSubmit, values, errors } = newForm({
+    initialValues: {
+      message: '',
+    },
+    onSubmit: async (values, helper) => {
+      Service.message.send(values.message, $page.params.id);
+
+      helper.setFieldValue('message', '');
+    },
   });
+
+  $: {
+    if (listRef) {
+      listRef.scrollTo({
+        behavior: 'smooth',
+        top: 0,
+      });
+    }
+  }
 </script>
 
 <div class="flex h-screen">
@@ -19,10 +36,6 @@
     <h2 class="text-xl font-bold mb-4">Online Users</h2>
     <ul class="space-y-2">
       <li>John Doe</li>
-      <li>Jane Smith</li>
-      <li>Bob Johnson</li>
-      <li>Alice Williams</li>
-      <li>Charlie Brown</li>
     </ul>
   </aside>
 
@@ -52,30 +65,32 @@
         style="overflow: hidden scroll;"
       >
         <div style="min-width: 100%; display: table;">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-bold">
-                John Doe <span class="text-sm text-gray-400">10:15 AM</span>
-              </h3>
-              <p>Hello, everyone!</p>
-            </div>
-            <div>
-              <h3 class="font-bold">
-                Jane Smith <span class="text-sm text-gray-400">10:16 AM</span>
-              </h3>
-              <p>Hi John, how are you?</p>
-            </div>
+          <div bind:this={listRef} class="space-y-4">
+            {#each $messagesStore as message}
+              <div>
+                <h3 class="font-bold">
+                  {message.userName}
+                  <span class="text-sm text-gray-400">10:16 AM</span>
+                </h3>
+                <p>{message.content}</p>
+              </div>
+            {/each}
           </div>
         </div>
       </div>
     </div>
     <footer class="p-4 bg-gray-800">
-      <TextField
-        name="message"
-        class="bg-white text-black"
-        placeholder="Type your message here..."
-        type="text"
-      />
+      <form on:submit={handleSubmit}>
+        <TextField
+          name="message"
+          class="bg-white text-black"
+          placeholder="Type your message here..."
+          type="text"
+          bind:value={$values.message}
+          error={$errors.message}
+        />
+        <input type="submit" hidden />
+      </form>
     </footer>
   </main>
 </div>
