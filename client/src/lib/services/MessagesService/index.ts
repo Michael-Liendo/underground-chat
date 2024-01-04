@@ -1,5 +1,7 @@
+import { messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
-import { messagesStore, type Message } from '$lib/stores/messages';
+
+import type { Message } from '$lib/stores/messages';
 
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`);
 
