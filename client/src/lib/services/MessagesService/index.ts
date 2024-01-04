@@ -4,7 +4,9 @@ import UserService from '../UserService';
 
 import type { Message } from '$lib/stores/messages';
 
-export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, { auth:{ username: await UserService.get()}});
+export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
+  auth: { username: await UserService.get() },
+});
 
 socket.on('chat message', (message: unknown, name: string) => {
   messagesStore.update((messages) => [
@@ -22,7 +24,6 @@ export default class MessagesService {
         ...messages,
         { content: content as string, userName: `${UserService.get()} (You)` },
       ]);
-
 
       return 'send';
     } catch (error) {

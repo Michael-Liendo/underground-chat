@@ -5,5 +5,5 @@ import UserService from './UserService';
 export default class Service {
   static chat = ChatService;
   static message = MessagesService;
-  static user = UserService
+  static user = UserService;
 }
