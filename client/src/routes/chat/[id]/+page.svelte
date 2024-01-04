@@ -74,7 +74,7 @@
             {#each $messagesStore as message}
               <div>
                 <h3 class="font-bold">
-                  {message.userName}
+                  {message.username}
                   <span class="text-sm text-gray-400">10:16 AM</span>
                 </h3>
                 <p>{message.content}</p>
