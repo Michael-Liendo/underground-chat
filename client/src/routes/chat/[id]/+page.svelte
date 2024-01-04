@@ -42,6 +42,7 @@
     <h2 class="text-xl font-bold mb-4">Online Users</h2>
     <ul class="space-y-2">
       <li>John Doe</li>
+      <li>Jane</li>
     </ul>
   </aside>
 
@@ -49,7 +50,7 @@
     <header
       class="flex items-center justify-between p-4 bg-gray-800 text-white"
     >
-      <h1 class="text-2xl font-bold">CyberSec Chat ( Title )</h1>
+      <h1 class="text-2xl font-bold">{$page.params.id}</h1>
       <div class="relative">
         <TextField
           name="message"
