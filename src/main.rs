@@ -14,18 +14,24 @@ use tower_http::cors::CorsLayer;
 
 mod routes;
 
-fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
-    println!("\nSocket.IO connected: {:?} {:?}", socket.ns(), socket.id);
-
-    // todo: emit a event with the user name
-    println!("Auth data {:?}", data);
+fn on_connect(socket: SocketRef) {
+    socket.on(
+        "join",
+        |socket: SocketRef, Data::<String>(room)| async move {
+            socket.leave_all().ok();
+            socket.join(room.clone()).ok();
+            // todo: emit a event with the user name
+        },
+    );
 
     socket.on("chat message", |socket: SocketRef, Data::<Value>(data)| {
         println!("Received event: {:?} \n", data);
 
+        // todo change to struct and add the date time
         let chat_id = &data.as_array().unwrap()[2].as_str().unwrap();
         socket
             .within(chat_id.to_string())
+            .broadcast()
             .emit("chat message", &data)
             .ok();
     });
