@@ -1,4 +1,5 @@
 export default function getHour(date: Date): string {
+  date = new Date(date)
   let hours = date.getHours();
   const minutes = date.getMinutes();
   const amPm = hours >= 12 ? 'PM' : 'AM';
