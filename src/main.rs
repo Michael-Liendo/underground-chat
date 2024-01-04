@@ -7,21 +7,17 @@ use axum::{
 use dotenv::dotenv;
 use serde_json::Value;
 use socketioxide::{
-    extract::{Bin, Data, SocketRef},
+    extract::{Data, SocketRef},
     SocketIo,
 };
 use tower_http::cors::CorsLayer;
 
 mod routes;
 
-fn on_connect(socket: SocketRef, Data(data): Data<Value>) {
-    socket.on(
-        "chat message",
-        |socket: SocketRef, Data::<Value>(data), Bin(bin)| {
-            println!("Received event: {:?} {:?}", data, bin);
-            socket.broadcast().emit("chat message", data).ok();
-        },
-    );
+fn on_connect(socket: SocketRef) {
+    socket.on("chat message", |socket: SocketRef, Data::<Value>(data)| {
+        socket.broadcast().emit("chat message", data).ok();
+    });
 }
 
 #[tokio::main]
