@@ -2,23 +2,6 @@ use axum::{http::StatusCode, routing::post, Json, Router};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-pub fn chats_routes() -> Router {
-    Router::new().route("/create", post(create_chat))
-}
-
-async fn create_chat(
-    Json(chat_for_create): Json<ChatForCreate>,
-) -> Result<(StatusCode, Json<ChatCreate>), String> {
-    let new_chat = Chat::new(chat_for_create);
-    Ok((
-        StatusCode::CREATED,
-        Json(ChatCreate {
-            success: true,
-            data: Some(new_chat),
-        }),
-    ))
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 struct ChatCreate {
     success: bool,
@@ -43,4 +26,21 @@ impl Chat {
             title: chat.title,
         }
     }
+}
+
+pub fn chats_routes() -> Router {
+    Router::new().route("/create", post(create_chat))
+}
+
+async fn create_chat(
+    Json(chat_for_create): Json<ChatForCreate>,
+) -> Result<(StatusCode, Json<ChatCreate>), String> {
+    let new_chat = Chat::new(chat_for_create);
+    Ok((
+        StatusCode::CREATED,
+        Json(ChatCreate {
+            success: true,
+            data: Some(new_chat),
+        }),
+    ))
 }

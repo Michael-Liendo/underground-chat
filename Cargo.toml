@@ -1,14 +1,16 @@
 [package]
 name = "underground-chat"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.7.3"
+axum = { version = "0.7.3" }
 dotenv = "0.15.0"
 serde = { version = "1.0.194", features = ["derive"] }
+socketioxide = "0.10.0"
 tokio = { version = "1.35.1", features = ["full"] }
 tower-http = { version = "0.5.0", features = ["cors"] }
+serde_json = "1.0.108"
 uuid = { version = "1.6.1", features = ["v4", "fast-rng", "macro-diagnostics"] }

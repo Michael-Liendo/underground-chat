@@ -1,9 +1,9 @@
-import { error } from '@sveltejs/kit';
+import type { PageLoad } from './$types';
 
-/** @type {import('./$types').PageLoad} */
-export function load({ params }) {
-  if (params.id) {
-  }
+export const ssr = false;
 
-  error(404, 'Not found');
-}
+export const load = (async () => {
+  return {
+    socket: await import('$lib/services/MessagesService'),
+  };
+}) satisfies PageLoad;

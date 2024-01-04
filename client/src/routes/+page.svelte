@@ -17,8 +17,13 @@
     }),
     onSubmit: async (values) => {
       const response = await Service.chat.create(values.title);
+      const createUser = await Service.user.create(values.name);
 
-      console.log(response);
+      if (response?.id) {
+        window.location.pathname = `/chat/${response.id}`;
+      } else {
+        console.log(response);
+      }
     },
   });
 </script>
