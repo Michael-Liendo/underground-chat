@@ -1,4 +1,4 @@
-import { messagesStore, type Message } from '$lib/stores/messages';
+import { type Message, messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
 import UserService from '../UserService';
 
@@ -7,16 +7,13 @@ export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
 });
 
 socket.on('chat message', (message: Message) => {
-  messagesStore.update((messages) => [
-    ...messages,
-    message,
-  ]);
+  messagesStore.update((messages) => [...messages, message]);
 });
 
 export default class MessagesService {
   static async send(content: string, room: string): Promise<string | null> {
     try {
-      const username = UserService.get()
+      const username = UserService.get();
       socket.emit('chat message', { content, room, username });
 
       messagesStore.update((messages) => [
