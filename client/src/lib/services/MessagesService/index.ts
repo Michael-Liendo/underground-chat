@@ -2,7 +2,7 @@ import { messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
 import UserService from '../UserService';
 
-import type { Message } from "$lib/stores/messages";
+import type { Message } from '$lib/stores/messages';
 
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
   auth: { username: await UserService.get() },
@@ -16,12 +16,17 @@ export default class MessagesService {
   static async send(content: string, room: string): Promise<string | null> {
     try {
       const username = UserService.get();
-      const created_at = new Date()
+      const created_at = new Date();
       socket.emit('chat message', { content, room, username, created_at });
 
       messagesStore.update((messages) => [
         ...messages,
-        { room: room, content: content, username: `${username} (You)`, created_at },
+        {
+          room: room,
+          content: content,
+          username: `${username} (You)`,
+          created_at,
+        },
       ]);
 
       return 'send';
