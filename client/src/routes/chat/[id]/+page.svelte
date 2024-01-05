@@ -34,7 +34,9 @@
 
   onMount(() => {
     messagesStore.subscribe(() => {
-      ScrollTo('down', listRef);
+      requestAnimationFrame(() => {
+        ScrollTo('down', listRef);
+      });
     });
   });
 
