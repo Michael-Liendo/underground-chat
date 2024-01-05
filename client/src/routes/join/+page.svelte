@@ -41,7 +41,7 @@
         placeholder="Enter chat id"
         error={$errors.id}
         bind:value={$values.id}
-        autocomplete={'false'}
+        autocomplete={'off'}
         required
       />
 

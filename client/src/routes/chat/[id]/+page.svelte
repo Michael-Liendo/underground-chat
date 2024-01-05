@@ -110,6 +110,7 @@
           class="bg-white !text-black"
           placeholder="Type your message here..."
           type="text"
+          autocomplete="off"
           bind:value={$values.message}
           error={$errors.message}
         />

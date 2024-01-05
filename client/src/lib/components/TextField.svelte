@@ -9,7 +9,7 @@
   export let label: string | null = null;
   export let placeholder: string | undefined = undefined;
   export let required = false;
-  export let autocomplete: 'true' | 'false' | undefined = undefined;
+  export let autocomplete: 'on' | 'off' | undefined = undefined;
   let customClassNames = '';
   export { customClassNames as class };
 
