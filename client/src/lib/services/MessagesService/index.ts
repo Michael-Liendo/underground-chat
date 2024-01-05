@@ -4,7 +4,6 @@ import UserService from '../UserService';
 
 import type { Message } from '$lib/types/Messages';
 
-
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
   auth: { username: await UserService.get() },
 });
