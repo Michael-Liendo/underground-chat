@@ -30,6 +30,32 @@
 
 <svelte:head>
   <title>Create a Chat | Underground Chat</title>
+
+  <meta
+    name="description"
+    content="Dive into a world of unfiltered conversations with Underground Chat. Connect anonymously, speak freely, and discover the power of authentic connection.
+  "
+  />
+  <meta
+    name="keywords"
+    content="anonymous chat, underground chat, private chat, secret chat, free chat, uncensored chat, real conversations, connect with strangers"
+  />
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="Create a Chat | Underground Chat" />
+  <meta
+    itemprop="description"
+    content="Dive into a world of unfiltered conversations with Underground Chat. Connect anonymously, speak freely, and discover the power of authentic connection.
+  "
+  />
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Create a Chat | Underground Chat" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://michaelliendo.com/" />
+  <meta
+    property="og:description"
+    content="Dive into a world of unfiltered conversations with Underground Chat. Connect anonymously, speak freely, and discover the power of authentic connection.
+  "
+  />
 </svelte:head>
 
 <div class="flex justify-center items-center min-h-screen">
