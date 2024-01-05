@@ -2,6 +2,8 @@ import { messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
 import UserService from '../UserService';
 
+import { activeUsersStore } from '$lib/stores/users';
+import type { Join } from '$lib/types/Join';
 import type { Message } from '$lib/types/Messages';
 
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
@@ -10,6 +12,10 @@ export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
 
 socket.on('chat message', (message: Message) => {
   messagesStore.update((messages) => [...messages, message]);
+});
+
+socket.on('join', (join: Join) => {
+  activeUsersStore.update((users) => [...users, { username: join.username }]);
 });
 
 export default class MessagesService {

@@ -9,6 +9,7 @@
   import { messagesStore } from '$lib/stores/messages';
   import getHour from '$lib/utils/DateToHours';
   import ScrollTo from '$lib/actions/ScrollTo';
+  import { activeUsersStore } from '$lib/stores/users';
 
   let listRef: HTMLElement;
 
@@ -51,10 +52,11 @@
 
 <div class="flex h-screen">
   <aside class="w-64 bg-gray-800 text-white p-4 border-r border-r-slate-900">
-    <h2 class="text-xl font-bold mb-4">Online Users</h2>
+    <h2 class="text-xl font-bold mb-4">Last Users Logged</h2>
     <ul class="space-y-2">
-      <li>John Doe</li>
-      <li>Jane</li>
+      {#each $activeUsersStore as user}
+        <li>{user.username}</li>
+      {/each}
     </ul>
   </aside>
 

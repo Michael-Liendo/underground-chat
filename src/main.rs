@@ -23,15 +23,23 @@ struct Message {
     created_at: DateTime<Utc>,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+struct Join {
+    room: String,
+    username: String,
+}
+
 fn on_connect(socket: SocketRef) {
-    socket.on(
-        "join",
-        |socket: SocketRef, Data::<String>(room)| async move {
-            socket.leave_all().ok();
-            socket.join(room.clone()).ok();
-            // todo: emit a event with the user name
-        },
-    );
+    socket.on("join", |socket: SocketRef, Data::<Join>(join)| async move {
+        socket.leave_all().ok();
+        socket.join(join.room.clone()).ok();
+
+        socket
+            .within(join.room.clone())
+            .broadcast()
+            .emit("join", join)
+            .ok();
+    });
 
     socket.on(
         "chat message",
