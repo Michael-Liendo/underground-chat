@@ -2,6 +2,7 @@
   import { newForm } from '@whizzes/svelte-forms';
   import { onMount } from 'svelte';
   import * as Yup from 'yup';
+  import MdiContentCopy from '~icons/mdi/content-copy';
 
   /** @type {import('./$types').RouteParams} */
   import { page } from '$app/stores';
@@ -72,7 +73,9 @@
         <h1 class="text-lg md:text-2xl font-bold truncate">
           {$page.params.id}
         </h1>
-        <button on:click={() => copyToClipboard($page.params.id)}>Copy</button>
+        <button on:click={() => copyToClipboard($page.params.id)}
+          ><MdiContentCopy /></button
+        >
       </div>
       <div class="relative w-[100%] hidden">
         <TextField
