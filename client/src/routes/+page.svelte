@@ -12,8 +12,8 @@
       name: '',
     },
     validationSchema: Yup.object({
-      title: Yup.string().required(),
-      name: Yup.string().required(),
+      title: Yup.string().required().min(1, 'Title is too short'),
+      name: Yup.string().required().min(1, 'Name is too short'),
     }),
     onSubmit: async (values) => {
       const response = await Service.chat.create(values.title);

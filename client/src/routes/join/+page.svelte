@@ -12,8 +12,8 @@
       name: '',
     },
     validationSchema: Yup.object({
-      id: Yup.string().required(),
-      name: Yup.string().required(),
+      id: Yup.string().required().min(1, 'ID is too short'),
+      name: Yup.string().required().min(1, 'Name is too short'),
     }),
     onSubmit: async (values) => {
       Service.user.create(values.name);

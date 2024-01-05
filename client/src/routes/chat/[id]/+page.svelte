@@ -1,6 +1,7 @@
 <script lang="ts">
   import { newForm } from '@whizzes/svelte-forms';
   import { onMount } from 'svelte';
+  import * as Yup from 'yup';
 
   /** @type {import('./$types').RouteParams} */
   import { page } from '$app/stores';
@@ -17,6 +18,9 @@
     initialValues: {
       message: '',
     },
+    validationSchema: Yup.object({
+      message: Yup.string().required().min(1, 'Message is too short'),
+    }),
     onSubmit: async (values, helper) => {
       Service.message.send(values.message, $page.params.id);
 
