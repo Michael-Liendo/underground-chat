@@ -2,9 +2,9 @@ import { messagesStore } from '$lib/stores/messages';
 import { io } from 'socket.io-client';
 import UserService from '../UserService';
 
-import type { Message } from '$lib/types/Messages';
-import type { Join } from '$lib/types/Join';
 import { activeUsersStore } from '$lib/stores/users';
+import type { Join } from '$lib/types/Join';
+import type { Message } from '$lib/types/Messages';
 
 export const socket = io(`${import.meta.env.VITE_API_URL}/ws`, {
   auth: { username: await UserService.get() },
@@ -14,10 +14,9 @@ socket.on('chat message', (message: Message) => {
   messagesStore.update((messages) => [...messages, message]);
 });
 
-socket.on('join', (join:Join) =>{
-  activeUsersStore.update((users) => [...users, {username: join.username}]);
-})
-
+socket.on('join', (join: Join) => {
+  activeUsersStore.update((users) => [...users, { username: join.username }]);
+});
 
 export default class MessagesService {
   static async send(content: string, room: string): Promise<string | null> {

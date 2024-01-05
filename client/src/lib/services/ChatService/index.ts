@@ -2,15 +2,18 @@ import fetch from '$lib/utils/fetch';
 import { socket } from '../MessagesService';
 import UserService from '../UserService';
 
-import type { Chat, ChatResponse } from '$lib/types/Chat';
 import { activeUsersStore } from '$lib/stores/users';
+import type { Chat, ChatResponse } from '$lib/types/Chat';
 
 export default class ChatService {
   static async join(room: string) {
-    let username = UserService.get()
-    socket.emit('join', {room, username});
+    const username = UserService.get();
+    socket.emit('join', { room, username });
 
-    activeUsersStore.update((users) => [...users, {username: `${username} (You)`}]);
+    activeUsersStore.update((users) => [
+      ...users,
+      { username: `${username} (You)` },
+    ]);
   }
 
   static async create(title: string): Promise<Chat | null> {
