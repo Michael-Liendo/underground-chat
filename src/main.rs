@@ -61,6 +61,7 @@ async fn main() {
     dotenv().ok();
 
     let server_port = env::var("PORT").expect("PORT must be set.");
+    let server_host = env::var("HOST").expect("HOST must be set.");
 
     let origins_urls: Vec<HeaderValue> = env::var("CORS_ORIGINS")
         .expect("CORS_ORIGINS must be set.")
@@ -81,7 +82,7 @@ async fn main() {
                 .allow_headers([header::CONTENT_TYPE]),
         );
 
-    let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{}", server_port))
+    let listener = tokio::net::TcpListener::bind(format!("{}:{}", server_host, server_port))
         .await
         .unwrap();
 
