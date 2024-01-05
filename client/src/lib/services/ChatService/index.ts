@@ -1,16 +1,7 @@
 import fetch from '$lib/utils/fetch';
 import { socket } from '../MessagesService';
 
-interface Chat {
-  id: string;
-  title: string;
-}
-
-interface ChatResponse {
-  success: boolean;
-  data?: Chat;
-  error?: unknown;
-}
+import type { Chat, ChatResponse } from '$lib/types/Chat';
 
 export default class ChatService {
   static async join(chatID: string) {
