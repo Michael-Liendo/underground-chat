@@ -60,7 +60,7 @@ fn on_connect(socket: SocketRef) {
 async fn main() {
     dotenv().ok();
 
-    let server_port = env::var("SERVER_PORT").expect("SERVER_PORT must be set.");
+    let server_port = env::var("PORT").expect("PORT must be set.");
 
     let origins_urls: Vec<HeaderValue> = env::var("CORS_ORIGINS")
         .expect("CORS_ORIGINS must be set.")
