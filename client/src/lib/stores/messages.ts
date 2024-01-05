@@ -1,10 +1,5 @@
 import { writable } from 'svelte/store';
 
-export interface Message {
-  content: string;
-  username: string;
-  room: string;
-  created_at: Date;
-}
+import type { Message } from '$lib/types/Messages';
 
 export const messagesStore = writable<Message[]>([]);
