@@ -107,7 +107,7 @@
       <form on:submit={handleSubmit}>
         <TextField
           name="message"
-          class="bg-white text-black"
+          class="bg-white !text-black"
           placeholder="Type your message here..."
           type="text"
           bind:value={$values.message}
