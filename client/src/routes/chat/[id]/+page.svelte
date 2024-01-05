@@ -1,16 +1,16 @@
 <script lang="ts">
   import { newForm } from '@whizzes/svelte-forms';
+  import { onMount } from 'svelte';
 
   /** @type {import('./$types').RouteParams} */
   import { page } from '$app/stores';
   import TextField from '$lib/components/TextField.svelte';
   import Service from '$lib/services';
   import { messagesStore } from '$lib/stores/messages';
-  import { socket } from '$lib/services/MessagesService';
-  import { onMount } from 'svelte';
   import getHour from '$lib/utils/DateToHours';
+  import ScrollTo from '$lib/actions/ScrollTo';
 
-  let listRef: HTMLElement | undefined;
+  let listRef: HTMLElement;
 
   const { handleSubmit, values, errors } = newForm({
     initialValues: {
@@ -31,6 +31,12 @@
       });
     }
   }
+
+  onMount(() => {
+    messagesStore.subscribe(() => {
+      ScrollTo('down', listRef);
+    });
+  });
 
   onMount(() => {
     Service.chat.join($page.params.id);
@@ -72,24 +78,21 @@
     >
       <div
         data-radix-scroll-area-viewport=""
-        class="h-full w-full rounded-[inherit]"
+        class="h-full w-full rounded-[inherit] space-y-4"
         style="overflow: hidden scroll;"
+        bind:this={listRef}
       >
-        <div style="min-width: 100%; display: table;">
-          <div bind:this={listRef} class="space-y-4">
-            {#each $messagesStore as message}
-              <div>
-                <h3 class="font-bold">
-                  {message.username}
-                  <span class="text-sm text-gray-400"
-                    >{getHour(message.created_at)}</span
-                  >
-                </h3>
-                <p>{message.content}</p>
-              </div>
-            {/each}
+        {#each $messagesStore as message}
+          <div>
+            <h3 class="font-bold">
+              {message.username}
+              <span class="text-sm text-gray-400"
+                >{getHour(message.created_at)}</span
+              >
+            </h3>
+            <p>{message.content}</p>
           </div>
-        </div>
+        {/each}
       </div>
     </div>
     <footer class="p-4 bg-gray-800">
