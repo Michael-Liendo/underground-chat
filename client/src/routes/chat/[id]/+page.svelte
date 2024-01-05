@@ -11,6 +11,7 @@
   import getHour from '$lib/utils/DateToHours';
   import ScrollTo from '$lib/actions/ScrollTo';
   import { activeUsersStore } from '$lib/stores/users';
+  import { copyToClipboard } from '$lib/actions/CopyClipBoard';
 
   let listRef: HTMLElement;
 
@@ -67,7 +68,12 @@
     <header
       class="flex items-center justify-between p-4 bg-gray-800 text-white"
     >
-      <h1 class="text-lg md:text-2xl font-bold truncate">{$page.params.id}</h1>
+      <div class="flex items-center space-x-3">
+        <h1 class="text-lg md:text-2xl font-bold truncate">
+          {$page.params.id}
+        </h1>
+        <button on:click={() => copyToClipboard($page.params.id)}>Copy</button>
+      </div>
       <div class="relative w-[100%] hidden">
         <TextField
           name="message"
