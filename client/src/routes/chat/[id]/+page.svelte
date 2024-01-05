@@ -55,7 +55,7 @@
 </svelte:head>
 
 <div class="flex h-screen">
-  <aside class="w-64 bg-gray-800 text-white p-4 border-r border-r-slate-900">
+  <aside class="w-full md:w-64 bg-gray-800 text-white p-4 md:block hidden">
     <h2 class="text-xl font-bold mb-4">Last Users Logged</h2>
     <ul class="space-y-2">
       {#each $activeUsersStore as user}
@@ -63,13 +63,12 @@
       {/each}
     </ul>
   </aside>
-
-  <main class="flex flex-col flex-1">
+  <main class="flex flex-col flex-1 w-full">
     <header
       class="flex items-center justify-between p-4 bg-gray-800 text-white"
     >
-      <h1 class="text-2xl font-bold">{$page.params.id}</h1>
-      <div class="relative">
+      <h1 class="text-lg md:text-2xl font-bold truncate">{$page.params.id}</h1>
+      <div class="relative w-[100%] hidden">
         <TextField
           name="message"
           class="bg-white text-black"
