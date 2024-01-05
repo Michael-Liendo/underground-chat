@@ -60,6 +60,8 @@ fn on_connect(socket: SocketRef) {
 async fn main() {
     dotenv().ok();
 
+    let server_port = env::var("SERVER_PORT").expect("SERVER_PORT must be set.");
+
     let origins_urls: Vec<HeaderValue> = env::var("CORS_ORIGINS")
         .expect("CORS_ORIGINS must be set.")
         .split(",")
@@ -79,7 +81,7 @@ async fn main() {
                 .allow_headers([header::CONTENT_TYPE]),
         );
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
+    let listener = tokio::net::TcpListener::bind(format!("127.0.0.1:{}", server_port))
         .await
         .unwrap();
 
