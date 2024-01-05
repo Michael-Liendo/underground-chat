@@ -68,7 +68,7 @@
       class="flex items-center justify-between p-4 bg-gray-800 text-white"
     >
       <h1 class="text-lg md:text-2xl font-bold truncate">{$page.params.id}</h1>
-      <div class="relative w-[100%]">
+      <div class="relative w-[100%] hidden">
         <TextField
           name="message"
           class="bg-white text-black"
