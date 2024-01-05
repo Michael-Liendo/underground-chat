@@ -37,6 +37,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Underground Chat | {$page.params.id}</title>
+</svelte:head>
+
 <div class="flex h-screen">
   <aside class="w-64 bg-gray-800 text-white p-4 border-r border-r-slate-900">
     <h2 class="text-xl font-bold mb-4">Online Users</h2>

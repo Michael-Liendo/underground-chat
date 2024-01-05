@@ -23,6 +23,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Join a Chat | Underground Chat</title>
+</svelte:head>
+
 <div class="flex justify-center items-center min-h-screen">
   <div
     class="w-full max-w-md p-6 m-auto bg-gray-800 rounded-xl shadow-md dark:bg-gray-800"
