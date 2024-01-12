@@ -1,7 +1,7 @@
 use socketioxide::extract::SocketRef;
 
-pub mod join;
-pub mod message;
+mod join;
+mod message;
 
 pub fn on_connect(socket: SocketRef) {
     socket.on("join", join::on_join);
